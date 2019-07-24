@@ -1,0 +1,239 @@
+<!-- new theme -->
+<div class="crypt-boxed-area">
+  <ul class="nav nav-tabs">
+    <li role="presentation">
+      <a href="#limit" class="active" data-toggle="tab">Limit</a>
+    </li>
+    <li role="presentation">
+      <a href="#market" data-toggle="tab">market </a>
+    </li>
+    <li role="presentation">
+      <a href="#stop-limit" data-toggle="tab">Stop Limit</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="limit">
+      <div class="row no-gutters">
+        <app-loader [IsLoading]="isBuyLoading"></app-loader>
+        <div class="col-md-6">
+          <div class="crypt-buy-sell-form">
+            <p>
+              Buy <span class="crypt-up">{{ exchange.MainCurrency }}</span>
+              <span class="fright" *ngIf="exchange.BaseValue != null">
+                Available:
+                <b class="crypt-up" (click)="BuyBaseValueClick()" style="cursor: pointer;">
+                  {{ exchange.BaseValue | appDynamicDigit: 8 }}
+                  {{ exchange.BaseCurrency }}
+                </b>
+              </span>
+            </p>
+            <div class="crypt-buy">
+              <form novalidate [formGroup]="buyForm" (ngSubmit)="Buy(buyForm.value, buyForm.valid)">
+                <div class="input-group mb-2"
+                  [ngClass]="{'has-error': isBuySubmitted && buyForm.get('price').hasError('required')}">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Price</span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Enter Price" formControlName="price"
+                    [(ngModel)]="exchange.BuyPrice" (keyup)="SetBuytotal('price')" appEightDigit />
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      {{ exchange.BaseCurrency }}</span>
+                  </div>
+                </div>
+                <div class="input-group mb-2"
+                  [ngClass]="{'has-error': isBuySubmitted && buyForm.get('amount').hasError('required')}">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Amount</span>
+                  </div>
+                  <input type="number" class="form-control" placeholder="Enter Amount" formControlName="amount"
+                    (keyup)="SetBuytotal('amount')" [(ngModel)]="exchange.BuyAmount" appEightDigit />
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      {{ exchange.MainCurrency }}</span>
+                  </div>
+                </div>
+                <div class="input-group mb-2 rate-per">
+                  <div class="btn-group-add btn-group">
+                    <button type="button" class="btn btn-sm" *ngFor="let item of arrBalPerc"
+                      (click)="calcBalance(item, 'buy')">
+                      {{ item }}%
+                    </button>
+                  </div>
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Total</span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="0.00" formControlName="total"
+                    [(ngModel)]="exchange.BuyTotalFees" (keyup)="SetBuytotal('total')" appEightDigt />
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      {{ exchange.BaseCurrency }}
+                    </span>
+                  </div>
+                  <span class="error-msg" *ngIf="isBuySubmitted &&
+                    buyForm.get('total').hasError('rangeValidation')">
+                    You have only {{ exchange.BaseValue }}
+                    {{ exchange.BaseCurrency }}
+                  </span>
+                  <span class="error-msg" *ngIf="isBuySubmitted &&
+                    buyForm.get('total').hasError('minimumValidation')">
+                    Minimum {{ exchange.BuyMinimum }}
+                    {{ exchange.BaseCurrency }} for Buy Trade
+                  </span>
+                </div>
+                <div>
+                  <p>
+                    Fee: <span class="fright">{{ exchange.BuyFees }}</span>
+                  </p>
+                </div>
+                <div *ngIf="!isLogin">
+                  <div class="col-md-12">
+                    <button type="button" class="btn crypt-button-red-full">
+                      <span style="text-decoration: underline;" (click)="GoToUrl('login')">Login</span> or
+                      <span style="text-decoration: underline;" (click)="GoToUrl('register')">Register</span> to Trade
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="isLogin">
+                  <div class="col-md-12">
+                    <button type="submit" class="btn crypt-button-green-full" [ladda]="isBuyLoading">
+                      <span>Buy {{ exchange.MainCurrency }}</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="crypt-buy-sell-form">
+            <p>
+              Sell <span class="crypt-down">{{ exchange.MainCurrency }}</span>
+              <span class="fright">Available:
+                <b class="crypt-down" (click)="SellBaseValueClick()" style="cursor: pointer;">{{ exchange.MainValue | appDynamicDigit: 8
+                  }}
+                  {{ exchange.MainCurrency }}</b></span>
+            </p>
+            <div class="crypt-sell">
+              <form novalidate [formGroup]="sellForm" (ngSubmit)="Sell(sellForm.value, sellForm.valid)">
+                <div class="input-group mb-2"
+                  [ngClass]="{'has-error': isSellSubmitted && sellForm.get('price').hasError('required')}">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Price</span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="price" placeholder="0.00"
+                    (keyup)="SetSelltotal('PRICE')" [(ngModel)]="exchange.SellPrice" placeholder="Enter Price"
+                    appEightDigit />
+                  <div class="input-group-append">
+                    <span class="input-group-text">{{
+                      exchange.BaseCurrency
+                      }}</span>
+                  </div>
+                </div>
+                <div class="input-group mb-2"
+                  [ngClass]="{'has-error': isSellSubmitted && sellForm.get('amount').hasError('required')}">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Amount</span>
+                  </div>
+                  <input type="number" class="form-control" formControlName="amount" placeholder="0.00"
+                    (keyup)="SetSelltotal('AMOUNT')" [(ngModel)]="exchange.SellAmount" placeholder="Enter Amount"
+                    appEightDigit />
+                  <div class="input-group-append">
+                    <span class="input-group-text">{{
+                      exchange.MainCurrency
+                      }}</span>
+                  </div>
+                </div>
+                <div class="input-group mb-2 rate-per">
+                  <div class="btn-group-add btn-group">
+                    <button type="button" class="btn btn-sm" *ngFor="let item of arrBalPerc"
+                      (click)="calcBalance(item, 'sell')">
+                      {{ item }}%
+                    </button>
+                  </div>
+                </div>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Total</span>
+                  </div>
+                  <input type="text" class="form-control" formControlName="total" placeholder="0.00"
+                    (keyup)="SetSelltotal('TOTAL')" [(ngModel)]="exchange.SellTotal" placeholder="0.000000000"
+                    appEightDigit />
+                  <div class="input-group-append">
+                    <span class="input-group-text">{{
+                      exchange.BaseCurrency
+                      }}</span>
+                  </div>
+                  <span class="error-msg" *ngIf="isSellSubmitted &&
+                    sellForm.get('total').hasError('rangeValidation')">
+                    You have only {{ exchange.MainValue }}
+                    {{ exchange.MainCurrency }}
+                  </span>
+                  <span class="error-msg" *ngIf="isSellSubmitted &&
+                    sellForm.get('total').hasError('minimumValidation')">Minimum
+                    {{ exchange.SellMinimum }}
+                    {{ exchange.BaseCurrency }} for Sell Trade</span>
+                </div>
+                <div>
+                  <p>
+                    Fee: <span class="fright">{{ exchange.SellFees }}%</span>
+                  </p>
+                </div>
+                <div class="mt-1" *ngIf="!isLogin">
+                  <button type="button" class="btn crypt-button-red-full">
+                    <span style="text-decoration: underline;" (click)="GoToUrl('login')">Login</span> or
+                    <span style="text-decoration: underline;" (click)="GoToUrl('register')">Register</span> to Trade
+                  </button>
+                </div>
+                <div *ngIf="isLogin">
+                  <button type="submit" class="btn crypt-button-red-full" [ladda]="isSellLoading">
+                    <span>Sell {{ exchange.MainCurrency }}</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="market">
+      <app-market-exchange [pairId]="pairId" [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency"
+        [baseValue]="baseValue" [mainValue]="mainValue">
+      </app-market-exchange>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="stop-limit">
+      <app-stoplimit [pairId]="pairId" [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency"
+        [baseValue]="baseValue" [mainValue]="mainValue"></app-stoplimit>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade modal-order cs-modal" bsModal #modal="bs-modal" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel" [config]="{ backdrop: 'static' }" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Order Details</h4>
+        <button type="button" class="close" data-dismiss="bs-modal" (click)="ClosePopUp()">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body xs-p-30" *ngIf="isOpen">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-info" [innerHTML]="buysellmsg"></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-12 text-right xs-mt-20">
+          <button type="button" class="btn btn-sm btn-primary" data-dismiss="bs-modal" (click)="ClosePopUp()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

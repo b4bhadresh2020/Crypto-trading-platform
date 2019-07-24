@@ -1,0 +1,195 @@
+main{
+  font-size: 14px;
+}
+#ad-form .row {
+    margin-bottom: 1.5em;
+}
+
+#ad-form .label-col label {
+    font-weight: bold;
+}
+
+#ad-form .input-append input {
+    width: 5em;
+}
+
+#ad-form .two-col-help-text {
+    color: #666;
+    font-style: italic;
+}
+
+.error-row {
+    background: #fee;
+}
+
+#ad-form .error-row {
+    background: #fee;
+    padding: 5px 0;
+}
+
+#ad-form.form-horizontal .control-label {
+    padding-top: 0;
+}
+
+#ad-form label.control-label {
+    text-align: left;
+}
+legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333;
+    border: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+.form-horizontal .form-group {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 4px \9;
+}
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px 0 0;
+    margin-top: 1px \9;
+    line-height: normal;
+}
+.form-horizontal .radio, .form-horizontal .checkbox {
+    min-height: 27px;
+}
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.radio, .checkbox {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.radio2{
+      padding-top: 15px;
+}
+@media (max-width: 980px) {
+    .add-adform input,
+    .add-adform select,
+    .add-adform #id_ad-other_info,
+    .add-adform .input-group,
+
+    .edit-adform input,
+    .edit-adform select,
+    .edit-adform .input-group,
+    .edit-adform textarea {
+        width: 90%;
+    }
+
+    .add-adform #submit-id-submit,
+    .edit-adform #submit-id-submit {
+        width: 100%;
+    }
+
+    .add-adform-radio.add-adform-radio.add-adform-radio {
+        position: static;
+        width: 20%;
+    }
+
+    input[type="checkbox"] {
+        width: 5%;
+    }
+    .radio2{
+      padding-top: 0px;
+    }
+    .display-mobile{
+      display: block;
+    }
+}
+
+button#adform {
+    width:220px;
+}
+
+.smallinput {
+    width:99px;
+}
+
+select#currencydropdown {
+    width:70px;
+}
+
+div#adinfo {
+    float:right;
+}
+
+.noscripthidden {/* check-obsolete > search for Obsolete template */
+    display:none;
+}
+
+div#advert_div {/* check-obsolete > search for Obsolete template */
+    border-bottom: 1px solid #eeeeee;
+
+}
+
+button.bigbutton {
+    height:35px;
+    width:130px;
+}
+
+a.infolink {
+    font-size: 12px;
+}
+
+span.formtopic {
+    font-weight:bold;
+}
+
+div.btn-group {
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+div#advert_div {/* check-obsolete > search for Obsolete template */
+    border-top:1px solid #eeeeee;
+}
+
+button.radiobutton {
+    width:110px;
+}
+
+div.priceinfo {
+    font-size:16px;
+    font-weight:bold;
+    padding-bottom: 7px;
+}
+
+.alert .priceinfo {
+    font-size:16px;
+}
+
+.alert-plain {
+    border-color: #ccc;
+}
+
+.alert-grey {
+    border-color: #ddd;
+    background: #f8f8f8;
+    color: #555;
+}
+
+.trade-timeline-item {
+    padding: 5px;
+    width: 45%;
+    margin: 0px 0px 5px 0px;
+}
+.high-risk {
+    color: red;
+}
+.display-mobile{
+  display: none;
+}

@@ -1,0 +1,92 @@
+main{
+  margin-top: 30px;
+}
+footer{
+    color: #888;
+}
+footer .nav{
+  display: block;
+}
+.footer-block {
+    padding-bottom: 30px;
+}
+
+footer .nav-header{
+    font-size: 12px;
+    color: #747474;
+}
+
+footer .nav-list a{
+    font-size: 13px;
+    padding: 3px 15px;
+}
+
+footer #copyright{
+    margin: -9px 0 0 31px;
+    font-size: 11px;
+}
+
+footer .nav-list a:hover{
+    color: #000000;
+    text-decoration: none;
+    background-color: #eee;
+}
+
+footer .nav-list>.active>a, footer .nav-list>.active>a:hover, footer .nav-list>.active>a:focus{
+    background-color: #747474;
+    color: #ffffff;
+}
+
+footer a {
+    color: #888;
+}
+
+footer a i {
+    margin-right: 5px;
+}
+
+footer .fa {
+    color: #888;
+    min-width: 14px;
+    text-align: left;
+    display: inline-block;
+}
+
+footer .caret.caret.caret {
+    border-top-color: #888;
+    vertical-align: text-top;
+}
+
+.accordeon-link.accordeon-link {
+    color: #337ab7;
+}
+.price-info {
+    color: green;
+}
+.price-info .warning {
+    color: red;
+}
+.loan-help{
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  background-color: rgba(86,61,124,.15);
+  border: 1px solid rgba(86,61,124,.2);
+  text-align: center;
+}
+.loan-help .fadeout {
+  background: linear-gradient(to bottom, rgba(100, 100, 100, 0) 0%, rgba(255, 255, 255, 1) 75%);
+  height: 140px;
+  margin-top: -157px;
+  position: relative;
+  margin-left: -16px;
+  margin-right: -16px;
+}
+.loan-help .btn-more{
+  margin-top: -40px;
+  position: absolute;
+  z-index: 10000;
+  margin-left: -50px;
+}
+@media only screen and (max-width: 768px) {
+  
+}

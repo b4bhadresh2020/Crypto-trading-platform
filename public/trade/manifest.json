@@ -1,0 +1,16 @@
+{
+  "name": "exchange",
+  "short_name": "exchange",
+  "description": "meet first cryptocurrency that change your life.",
+  "lang": "en-US",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "dir": "ltr",
+  "scope": "/",
+  "orientation": "any",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "icons": []
+}

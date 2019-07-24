@@ -1,0 +1,51 @@
+<!-- new theme -->
+<app-loader [IsLoading]="isDailyExchangeLoader"></app-loader>
+
+<div class="crypt-gross-market-cap mt-3">
+  <div class="row">
+    <div class="col-3 col-sm-6 col-md-6 col-lg-6">
+      <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <p>Last Price BTC</p>
+          <p>{{ dailyExchange.lastPrice | appDynamicDigit: 8 }} </p>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <p>Change BTC</p>
+          <p class="crypt-down">{{ dailyExchange.dailyChange | appDynamicDigit: 2 }}% </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 col-sm-2 col-md-3 col-lg-2">
+      <p>High</p>
+      <p class="crypt-up">{{ dailyExchange.highest24hours | appDynamicDigit: 8 }}</p>
+    </div>
+    <div class="col-3 col-sm-2 col-md-3 col-lg-2">
+      <p>Low</p>
+      <p class="crypt-down">{{ dailyExchange.lowest24hours | appDynamicDigit: 8 }}</p>
+    </div>
+    <div class="col-3 col-sm-2 col-md-3 col-lg-2">
+      <p>Volume 24Hr</p>
+      <p class="crypt-down">{{ dailyExchange.volume24hours | appDynamicDigit: 8 }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="tradingview-widget-container mb-3">
+  <div id="crypt-candle-chart"></div>
+</div> -->
+
+<div class="clschart" *ngIf="!isOriginal">
+  <app-original-chart [pairId]="pairId" [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency">
+  </app-original-chart>
+</div>
+<!-- <div class="clschart" *ngIf="isOriginal">
+  <app-depth-chart [pairId]="pairId" [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency"></app-depth-chart>
+</div> -->
+<!-- <ul class="btn-group-add-chart col-md-offset-9 col-md-3">
+    <li>
+      <button class="btn btn-sm" (click)="showHideChart(1)">Original</button>
+    </li>
+    <li>
+      <button class="btn btn-sm" (click)="showHideChart(2)">Depth</button>
+    </li>
+  </ul> -->

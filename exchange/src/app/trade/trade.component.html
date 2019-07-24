@@ -1,0 +1,136 @@
+<header>
+  <div class="container-full-width">
+    <div class="crypt-header">
+      <div class="row">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5">
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="crypt-logo">
+                <img src="../../../assets/exchanger/images/logo.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8 col-lg-8 col-md-8 d-none d-md-block d-lg-block">
+          <ul class="crypt-heading-menu fright">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <!-- <li>
+              <a [routerLink]="['/user/balancehistory']" routerLinkActive="active">Overview</a>
+            </li>
+            <li>
+              <a [routerLink]="['/user/balancehistory']" routerLinkActive="active">Market Cap</a>
+            </li>
+            <li>
+              <a [routerLink]="['/user/balancehistoory']" routerLinkActive="active">Trading</a>
+            </li>
+            <li>
+              <a [routerLink]="['/user/balancehistory']" routerLinkActive="active">Account</a>
+            </li> -->
+            <!-- <li class="crypt-box-menu menu-green" *ngIf="!isLogin">
+              <a href="javascript:void(0);" [routerLink]="['/login']">login</a>
+            </li> -->
+            <!-- <li class="btn btn-danger" *ngIf="isLogin">
+              <a href="javascript:void(0);" (click)="Logout();">logout</a>
+            </li> -->
+          </ul>
+        </div>
+        <i class="menu-toggle pe-7s-menu d-xs-block d-sm-block d-md-none
+          d-sm-none"></i>
+      </div>
+    </div>
+  </div>
+  <div class="crypt-mobile-menu">
+    <ul class="crypt-heading-menu">
+      <li class="active"><a href="#">Exchange</a></li>
+      <li><a href="#">Market Cap</a></li>
+      <li><a href="#">Treanding</a></li>
+      <li><a href="#">Tools</a></li>
+      <li class="crypt-box-menu menu-red"><a href="#">register</a></li>
+      <li class="crypt-box-menu menu-green"><a href="#">login</a></li>
+    </ul>
+    <div class="crypt-gross-market-cap">
+      <h5>$34.795.90 <span class="crypt-up pl-2">+3.435 %</span></h5>
+      <h6>0.7925.90 BTC <span class="crypt-down pl-2">+7.435 %</span></h6>
+    </div>
+  </div>
+</header>
+<div class="container-fluid">
+  <div class="row sm-gutters">
+    <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-2">
+      <div class="crypt-market-status mt-3">
+        <div>
+          <ul class="nav nav-tabs" id="crypt-tab">
+            <li role="presentation">
+              <a href="#btc" data-toggle="tab" [ngClass]="{ active: selectedItem == '1' }"
+                (click)="GetMarketListTab(1)">btc</a>
+            </li>
+
+            <li role="presentation">
+              <a href="#eth" data-toggle="tab" [ngClass]="{ active: selectedItem == '2' }"
+                (click)="GetMarketListTab(2)">eth</a>
+            </li>
+            <li role="presentation">
+              <a href="#usdt" class="active" data-toggle="tab" [ngClass]="{ active: selectedItem == '3' }"
+                (click)="GetMarketListTab(3)">usdt</a>
+            </li>
+          </ul>
+          <div class="tab-content crypt-tab-content">
+            <div role="tabpanel" class=" active" id="usd">
+              <app-loader [IsLoading]="loading"></app-loader>
+              <table class="table table-striped">
+                <thead>
+                  <tr class="table-head">
+                    <th scope="col">Pair</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Change</th>
+                  </tr>
+                </thead>
+                <tbody class="crypt-table-hover">
+
+                  <tr *ngFor="let item of currencyPairList" (click)="GetRowDetail(item)" class="cr_success"
+                    style="line-height: 2.2em;" [ngClass]="{ 'bg-row': item.name == selectedRow }">
+
+                    <td class="align-middle">{{ item.name }}</td>
+
+                    <td class="crypt-down align-middle">
+                      <span class="pr-2 text-center" data-toggle="tooltip" data-placement="right"
+                        data-original-title="$ 0.05">{{ item.price | appDynamicDigit: 8 }}</span>
+                    </td>
+
+                    <td appColor [attr.value]="item.change">
+                      <span class="d-block">{{ item.change | appDynamicDigit: 2 }}%</span>
+                    </td>
+
+                  </tr>
+                  <tr *ngIf="dataList?.length == 0">
+                    <td colspan="3">No data found</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-8">
+      <app-chart [pairId]="pairId" [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency"></app-chart>
+      <app-exchange [pairId]="pairId" [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency" [side]="side"
+        [price]="price" [amount]="amount" [total]="total" [buyModel]="buyModel" [sellModel]="sellModel"></app-exchange>
+
+      <!-- <div id="depthchart" class="depthchart h-40 crypt-dark-segment"></div> -->
+    </div>
+    <div class="col-md-4 col-lg-3 col-xl-3 col-xxl-2">
+      <app-home-trade-history [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency" [pairId]="pairId">
+      </app-home-trade-history>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <app-orders [baseCurrency]="baseCurrency" [mainCurrency]="mainCurrency" [pairId]="pairId"
+    (orederTypeChange)="changeOrderType($event)" (priceChange)="changePrice($event)"
+    (amountChange)="changeAmount($event)" (totalChange)="changeTotal($event)" (buyModelChange)="changeBuyModel($event)"
+    (sellModelChange)="changeSellModel($event)"></app-orders>
+</div>
+<footer></footer>

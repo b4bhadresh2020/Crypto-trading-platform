@@ -1,0 +1,199 @@
+<!-- New Theme -->
+<div class="row sm-gutters">
+  <div class="col-lg-3 col-md-3 col-xl-3">
+    <div class="crypt-market-status">
+      <ul class="nav nav-tabs">
+        <li role="presentation">
+          <a class="crypt-down" href="javascript:void(0);">SELL ODERS</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active mx-height" id="SELL">
+          <div class="data-box support-scroll-container ps" [perfectScrollbar]="config"
+            style="position: relative; max-height: calc(50vh - 110px);">
+            <app-loader [IsLoading]="sellloading"></app-loader>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Price</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="animated fadeInUp" *ngFor="let item of sellOrderList" (click)="getRowSellOrder(item)"
+                  style="cursor: pointer;">
+                  <td>{{ item.price | appDynamicDigit: 8 }} </td>
+                  <td> {{ item.amount | appDynamicDigit: 8 }} </td>
+                  <td>
+                    {{ item.price * item.amount | appDynamicDigit: 8 }}
+                  </td>
+                </tr>
+                <tr *ngIf="sellOrderList == null" class="text-center">
+                  <td colspan="3"> You have not made any trades yet. Once you make some trades, they will appear here.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-xl-3">
+    <div class="crypt-market-status">
+      <ul class="nav nav-tabs">
+        <li role="presentation">
+          <a class="crypt-up" href="javascript:void(0);">BUY ORDERS</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active mx-height" id="BUY">
+          <div class="data-box support-scroll-container ps" [perfectScrollbar]="config"
+            style="position: relative; max-height: calc(50vh - 110px);">
+            <app-loader [IsLoading]="buyloading"></app-loader>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Price</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="animated fadeInUp" *ngFor="let item of buyOrderList" (click)="getRowBuyOrder(item)"
+                  style="cursor: pointer;">
+                  <td>{{ item.price | appDynamicDigit: 8 }} </td>
+                  <td> {{ item.amount | appDynamicDigit: 8 }} </td>
+                  <td>
+                    {{ item.price * item.amount | appDynamicDigit: 8 }}
+                  </td>
+                </tr>
+                <tr *ngIf="buyOrderList == null" class="text-center">
+                  <td colspan="3" class="text-center"> You have not made any trades yet. Once you make some trades, they
+                    will appear here.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-md-6 col-xl-6">
+    <div class="crypt-market-status">
+      <ul class="nav nav-tabs">
+        <li role="presentation">
+          <a href="#active-orders" class="active" data-toggle="tab">Open Orders</a>
+        </li>
+        <li role="presentation">
+          <a href="#closed-orders" data-toggle="tab">My Order</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="active-orders">
+          <div class="data-box support-scroll-container ps" [perfectScrollbar]="config"
+            style="position: relative; max-height: calc(50vh - 110px);">
+            <app-loader [IsLoading]="openloading"></app-loader>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col">
+                    Date
+                  </th>
+                  <th class="text-center" scope="col">
+                    Type
+                  </th>
+                  <th class="text-center" scope="col">
+                    Side
+                  </th>
+                  <th class="text-center" scope="col">
+                    Price <span>({{ baseCurrency }})</span>
+                  </th>
+                  <th class="text-center" scope="col">
+                    Amount <span>({{ mainCurrency }})</span>
+                  </th>
+                  <th class="text-center" scope="col">
+                    Value <span>({{ baseCurrency }})</span>
+                  </th>
+                  <th class="text-center" scope="col">
+                    Cancel Order
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of userPendingOrder">
+                  <td class="text-center">{{ item.updated_at | date:'dd-MM-yyyy hh:mm:ss' }}</td>
+                  <td class="text-center">{{ item.order_type }}</td>
+                  <td [ngClass]="{'crypt-up': item.side=='BUY','crypt-down': item.side=='SELL'}" class="text-center">
+                    {{ item.side }}</td>
+                  <td [ngClass]="{'crypt-up': item.side=='BUY','crypt-down': item.side=='SELL'}" class="text-center">
+                    {{ item.price | appDynamicDigit: 8 }}</td>
+                  <td class="text-center">{{ item.amount | appDynamicDigit: 8 }}</td>
+                  <td class="text-center">
+                    {{ item.price * item.amount | appDynamicDigit: 8 }}
+                  </td>
+                  <td class="text-center">
+                    <a href="javascript:void(0);"><i class="fa fa-times crypt-down" title="Cancel Order"
+                        (click)="CancelOrder(item.id)"></i></a>
+                  </td>
+                </tr>
+                <tr *ngIf="userPendingOrder == undefined">
+                  <td colspan="7" class="text-center">No data found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="closed-orders">
+          <div class="data-box support-scroll-container ps" [perfectScrollbar]="config"
+            style="position: relative; max-height: calc(50vh - 110px);">
+            <app-loader [IsLoading]="myorderloading"></app-loader>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col">
+                    Date
+                  </th>
+                  <th class="text-center" scope="col">
+                    Type
+                  </th>
+                  <th class="text-center" scope="col">
+                    Side
+                  </th>
+                  <th class="text-center" scope="col">
+                    Price <span>({{ baseCurrency }})</span>
+                  </th>
+                  <th class="text-center" scope="col">
+                    Amount <span>({{ mainCurrency }})</span>
+                  </th>
+                  <th class="text-center" scope="col">
+                    Value <span>({{ baseCurrency }})</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of userConfirmOrder">
+                  <td class="text-center">{{ item.updated_at | date:'dd-MM-yyyy hh:mm:ss' }}</td>
+                  <td class="text-center">{{ item.order_type }}</td>
+                  <td [ngClass]="{'crypt-up': item.side=='BUY','crypt-down': item.side=='SELL'}" class="text-center">
+                    {{ item.side }}</td>
+                  <td [ngClass]="{'crypt-up': item.side=='BUY','crypt-down': item.side=='SELL'}" class="text-center">
+                    {{ item.price | appDynamicDigit: 8 }}</td>
+                  <td class="text-center">{{ item.amount | appDynamicDigit: 8 }}</td>
+                  <td class="text-center">
+                    {{ item.price * item.amount | appDynamicDigit: 8 }}
+                  </td>
+                </tr>
+                <tr *ngIf="userConfirmOrder == undefined">
+                  <td colspan="6" class="text-center">No data found</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

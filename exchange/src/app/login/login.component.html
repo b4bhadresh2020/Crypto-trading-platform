@@ -1,0 +1,54 @@
+<section class="login-container">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <!-- <a class="nav-link page-scroll back-to-home" [routerLink]="['/']" routerLinkActive="router-link-active">
+          <i class="fa fa-angle-left xs-mr-10"></i> Back to Home</a> -->
+        <div class="login-box">
+          <div class="row row-flex">
+            <div class="col-md-5 col-md-flex ">
+              <form novalidate id="loginForm" [formGroup]="loginForm"
+                (ngSubmit)="Login(loginForm.value,loginForm.valid)">
+                <div class="login-blog">
+                  <div class="logo logo-id text-left  xs-mt-10 xs-mb-30">
+                    <img src="../../../assets/exchanger/images/logo.png" alt="exchanger logo" />
+                  </div>
+                  <div class="form-group" [ngClass]="{'has-error': (isLoginSubmitted && loginForm.get('email').hasError('required')) ||
+                    (!loginForm.get('email').valid && loginForm.get('email').hasError('pattern'))}">
+                    <label for="email">Email address:</label>
+                    <div class="input-group">
+                      <span class="input-group-addon cust-pad">
+                        <i class="fa fa-envelope"></i>
+                      </span>
+                      <input type="text" class="form-control" id="email" name="email" formControlName="email"
+                        placeholder="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                    </div>
+                    <span class="error-msg"
+                      *ngIf="!loginForm.get('email').valid && loginForm.get('email').hasError('pattern')">
+                      Enter valid email. </span>
+                  </div>
+                  <div class="form-group "
+                    [ngClass]="{'has-error': isLoginSubmitted && loginForm.get('password').hasError('required')}">
+                    <label for="password">Password:</label>
+                    <div class="input-group">
+                      <span class="input-group-addon cust-pad">
+                        <i class="fa fa-lock"></i>
+                      </span>
+                      <input type="password" id="password" name="password" class="form-control"
+                        formControlName="password" placeholder="password">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-12 col-xs-12">
+                      <button [ladda]="isLoading" class="btn btn-sm pull-right btn-success" type="submit">Login</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

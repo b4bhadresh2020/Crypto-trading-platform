@@ -1,0 +1,77 @@
+ul{
+  list-style: none;
+}
+.wallet-page{
+  margin-bottom: 145px;
+}
+
+.list {
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: table;
+    white-space: nowrap;
+    width: 100%;
+    border: 1px solid #e6e6e6;
+
+}
+
+.list li {
+    display: table-row;
+    color: #5c5c5c;
+    height: 30px;
+}
+
+
+
+
+.list li:hover {
+
+    background-color: #f1f1f1;
+
+}
+
+.list li:nth-child(1) {background-color: #f4f4f4;text-transform: uppercase;font-size: 12px;font-weight: bold;color: #999;height: 31px;}
+.list li:nth-child(1) span {
+    padding-left: 14px;
+}
+
+.list span {height: 35px;text-align: left;display: table-cell;padding-left: 14px;vertical-align: middle;border-bottom: 1px solid #f0f0f0;font-size: 13px;line-height: 22px;}
+.list li button.btn-deposit {
+    display: inline-block;
+    min-width: 70px;
+    height: 23px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    color: #666;
+    border: 1px solid #e5e7ea;
+    margin-left: 6px;
+    background: #fff;
+}
+.list li button.btn-deposit:hover{
+  background: #e8b342;
+  border-color: #e8b342;
+  color: #fff;
+}
+.badge{
+  padding: .45em .4em;
+}
+.list .action{
+margin-top: -4px;
+}
+.listWrap ul.float-right li.total{
+  font-size: 14px;
+}
+.listWrap ul.float-right li {
+    line-height: 100%;
+    color: #666;
+    text-align: right;
+}
+.listWrap ul.float-right li.limit {
+    font-size: 12px;
+}
+.listWrap ul.float-right li:last-of-type {
+    margin-bottom: 0;
+}

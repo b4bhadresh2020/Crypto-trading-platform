@@ -1,0 +1,143 @@
+<div class="row no-gutters" id="stoplimit">
+  <div class="col-md-6">
+    <form novalidate [formGroup]="buyForm" (ngSubmit)="Buy(buyForm.value,buyForm.valid)">
+      <div class="crypt-buy-sell-form">
+        <p>
+          Buy <span class="crypt-up">{{ mainCurrency }}</span>
+          <span class="fright">Available: <b class="crypt-up">{{ stopLimitObj.BaseValue | appDynamicDigit:8 }}
+              {{ baseCurrency }}</b></span>
+        </p>
+        <div class="crypt-buy">
+          <div class="input-group mb-2"
+            [ngClass]="{'has-error': isBuySubmitted && buyForm.get('BuyStop').hasError('required')}">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Stop</span>
+            </div>
+            <input type="text" formControlName="BuyStop" appEightDigit name="text" [(ngModel)]="stopLimitObj.BuyStop"
+              placeholder="Enter Stop" class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ baseCurrency }}</span>
+            </div>
+          </div>
+          <div class="input-group mb-2"
+            [ngClass]="{'has-error': isBuySubmitted && buyForm.get('BuyLimit').hasError('required')}">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Limit</span>
+            </div>
+            <input type="text" formControlName="BuyLimit" (keyup)="SetBuytotal('limit')"
+              [(ngModel)]="stopLimitObj.BuyLimit" appEightDigit name="text" placeholder="Enter Limit"
+              class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ baseCurrency }}</span>
+            </div>
+            <span class="error-msg" *ngIf="isBuySubmitted && buyForm.get('BuyLimit').hasError('rangeValidation')">
+              Limit price greater then stop price
+            </span>
+          </div>
+          <div class="input-group mb-2"
+            [ngClass]="{'has-error': isBuySubmitted && buyForm.get('BuyAmount').hasError('required')}">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Amount</span>
+            </div>
+            <input type="number" formControlName="BuyAmount" (keyup)="SetBuytotal('amount')"
+              [(ngModel)]="stopLimitObj.BuyAmount" appEightDigit name="text" placeholder="Enter Amount"
+              class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ mainCurrency }}</span>
+            </div>
+          </div>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Total</span>
+            </div>
+            <input type="text" formControlName="BuyTotal" disabled (keyup)="SetBuytotal('total')"
+              [(ngModel)]="stopLimitObj.BuyTotal" appEightDigit name="text" placeholder="Total" class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ baseCurrency }}</span>
+            </div>
+          </div>
+          <div class="mt-1" *ngIf="!isLogin">
+            <button type="button" class="btn crypt-button-red-full">
+              <span style="text-decoration: underline;" (click)="GoToUrl('login')">Login</span> or
+              <span style="text-decoration: underline;" (click)="GoToUrl('register')">Register</span> to Trade
+            </button>
+          </div>
+          <div class="mt-1" *ngIf="isLogin">
+            <button type="submit" class="btn crypt-button-green-full" [ladda]="isBuyLoading">
+              <span>Buy {{ mainCurrency }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <form novalidate [formGroup]="sellForm" (ngSubmit)="Sell(sellForm.value,sellForm.valid)">
+      <div class="crypt-buy-sell-form">
+        <p>
+          Sell <span class="crypt-down">{{ mainCurrency }}</span>
+          <span class="fright">Available: <b class="crypt-down">{{ stopLimitObj.MainValue | appDynamicDigit:8 }}
+              {{ mainCurrency }}</b></span>
+        </p>
+        <div class="crypt-sell">
+          <div class="input-group mb-2"
+            [ngClass]="{'has-error': isSellSubmitted && sellForm.get('SellStop').hasError('required')}">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Stop</span>
+            </div>
+            <input type="text" formControlName="SellStop" appEightDigit name="text" placeholder="Enter Stop"
+              [(ngModel)]="stopLimitObj.SellStop" class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ baseCurrency }}</span>
+            </div>
+          </div>
+          <div class="input-group mb-2"
+            [ngClass]="{'has-error': isSellSubmitted && sellForm.get('SellLimit').hasError('required')}">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Limit</span>
+            </div>
+            <input type="text" formControlName="SellLimit" appEightDigit name="text" placeholder="Enter Limit"
+              (keyup)="SetSelltotal('limit')" [(ngModel)]="stopLimitObj.SellLimit" class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ baseCurrency }}</span>
+            </div>
+            <span class="error-msg" *ngIf="isSellSubmitted && sellForm.get('SellLimit').hasError('rangeValidation')">
+              Stop price greater then limit price
+            </span>
+          </div>
+          <div class="input-group mb-2"
+            [ngClass]="{'has-error': isSellSubmitted && sellForm.get('SellAmount').hasError('required')}">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Amount</span>
+            </div>
+            <input type="number" formControlName="SellAmount" appEightDigit name="text" placeholder="Enter Amount"
+              (keyup)="SetSelltotal('amount')" [(ngModel)]="stopLimitObj.SellAmount" class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ mainCurrency }}</span>
+            </div>
+          </div>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Total</span>
+            </div>
+            <input type="text" formControlName="SellTotal" appEightDigit name="text" placeholder="Total"
+              (keyup)="SetSelltotal('total')" [(ngModel)]="stopLimitObj.SellTotal" disabled class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{ baseCurrency }}</span>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="!isLogin">
+            <button type="button" class="btn crypt-button-red-full">
+              <span style="text-decoration: underline;" (click)="GoToUrl('login')">Login</span> or
+              <span style="text-decoration: underline;" (click)="GoToUrl('register')">Register</span> to Trade</button>
+          </div>
+          <div class="mt-1" *ngIf="isLogin">
+            <button type="submit" class="btn crypt-button-red-full" [ladda]="isSellLoading">
+              <span>Sell {{ mainCurrency }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

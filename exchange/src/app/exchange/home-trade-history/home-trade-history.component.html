@@ -1,0 +1,38 @@
+<div class="crypt-market-status mt-3">
+  <div>
+    <ul class="nav nav-tabs">
+      <li role="presentation">
+        <a href="#market-trading" data-toggle="tab">Trade History</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active mx-height" id="market-trading">
+        <app-loader [IsLoading]="tradeListLoading"></app-loader>
+        <div class="data-box support-scroll-container ps" [perfectScrollbar]="config"
+          style="position: relative; max-height: calc(84vh - 110px);">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Price</th>
+                <th scope="col">Amount</th>
+                <th scope="col" class="text-right">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="animated fadeInUp" *ngFor="let item of tradeHisList">
+                <td [ngClass]="{'crypt-up': item.side=='BUY','crypt-down': item.side=='SELL'}">
+                  {{ item.price | appDynamicDigit: 8 }} </td>
+                <td> {{ item.amount | appDynamicDigit: 8 }} </td>
+                <td class="text-right"> {{ item.updated_at | date:'hh:mm:ss' }}</td>
+              </tr>
+              <tr *ngIf="tradeHisList == null" class="text-center">
+                <td colspan="3"> You have not made any trades yet. Once you make some trades, they will appear here
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
